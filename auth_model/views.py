@@ -32,13 +32,14 @@ def auth_view(request) :
 def sign_up(request):
     return render(request, 'auth_model/create_new_user.html')
 
-def create_new_user(request):
+def create_new_user(request) :
     try:
         user = User.objects.create_user(
         username = request.POST['username'],
         password = request.POST['password'],
         email = request.POST['email'],
         )
+        user.extra_fields = {'phone_number' : request.POST['phone_number']}
         user.save()
         username = request.POST.get('username', '' )
         password = request.POST.get('password', '' )
