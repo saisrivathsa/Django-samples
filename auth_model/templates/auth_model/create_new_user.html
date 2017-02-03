@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Sign up</title>
+</head>
+<body>
+
+  <form action = "{% url 'auth_model:create_new_user' %}" method="post">
+{% csrf_token %}
+
+<label for="username">Username :</label>
+<input type="text" name="username" />
+<label for="password">Password : </label>
+<input type="password" name="password" />
+<label for="email"> Email id :</label>
+<input type="text" name="email" />
+<input type="submit" value="Login" />
+</form>
+<br>
+{% if error %}<p><strong>{{ error }}</strong></p>{% endif %}
+</body>
+</html>
