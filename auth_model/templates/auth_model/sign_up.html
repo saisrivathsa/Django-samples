@@ -9,16 +9,16 @@
 {% csrf_token %}
 
 <label for="username">Username :</label>
-<input type="text" name="username" />
+<input type="text" name="username" /> <br><br><br>
 <label for="password">Password : </label>
-<input type="password" name="password" />
+<input type="password" name="password" /> <br><br><br>
 <label for="email"> Email id :</label>
-<input type="text" name="email" />
+<input type="text" name="email" /> <br><br><br>
 <label for="phone_number">Mobile number :</label>
-<input type="text" name="phone_number" />
-<input type="submit" value="Login" />
+<input type="text" name="phone_number" /> <br><br><br>
+<input type="submit" value="Login" /> <br><br><br>
 </form>
-<br>
+<br><br><br>
 {% if error %}<p><strong>{{ error }}</strong></p>{% endif %}
 </body>
 </html>

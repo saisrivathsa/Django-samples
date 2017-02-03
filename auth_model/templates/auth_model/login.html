@@ -5,16 +5,16 @@
 </head>
 <body>
 
-  <form action = "{% url 'auth_model:auth_view' %}" method="post">
+  <form action = "{% url 'auth_model:authenticate_method' %}" method="post">
 {% csrf_token %}
 
 <label for="username">Username :</label>
-<input type="text" name="username" />
+<input type="text" name="username" /> <br><br><br>
 <label for="password">Password : </label>
-<input type="password" name="password" />
-<input type="submit" value="Login" />
+<input type="password" name="password" /> <br><br><br>
+<input type="submit" value="Login" /> <br><br><br>
 </form>
-<br>
+<br><br><br>
 {% if error %}<p><strong>{{ error }}</strong></p>{% endif %}
 </body>
 </html>

@@ -6,32 +6,27 @@ from django.contrib import auth
 # for new user
 from django.contrib.auth.models import User
 
-
-def login(request) :
-    return render(request, 'auth_model/login.html')
-
 def logout(request) :
     auth.logout(request)
     return HttpResponseRedirect(reverse('auth_model:login'))
 
 def success(request) :
-    return render(request, 'auth_model/success.html', {'username' :request.user.username})
+    return render(request, 'auth_model/success.html', {'username' : request.user.username})
 
-def auth_view(request) :
+#gets values from the form and checks whether user exists
+def authenticate_method(request) :
     username = request.POST.get('username', '' )
     password = request.POST.get('password', '' )
     user = auth.authenticate( username=username, password=password )
-
+    # The default value when a user is not found is none
     if user is not None :
         auth.login( request, user)
         return HttpResponseRedirect(reverse("auth_model:success"))
     else :
         return render(request, "auth_model/login.html", {'error':'Invalid Credentials'})
-        #return HttpResponseRedirect(reverse("auth_model:login", kwargs={'error' : 'Invalid Credentials
+        # Takes back to login page with an error message
 
-def sign_up(request):
-    return render(request, 'auth_model/create_new_user.html')
-
+# Creates a new user by taking name, mail, mobile number and password
 def create_new_user(request) :
     try:
         user = User.objects.create_user(
@@ -39,11 +34,15 @@ def create_new_user(request) :
         password = request.POST['password'],
         email = request.POST['email'],
         )
+        # Default fields for user class in django doesn't contain certain fields which can be added using extra_fields
         user.extra_fields = {'phone_number' : request.POST['phone_number']}
+        # Saving the user data
         user.save()
         username = request.POST.get('username', '' )
         password = request.POST.get('password', '' )
+        # Logging in the user after creating the new user
         user = auth.authenticate( username=username, password=password )
-        return HttpResponse('<h2>Created new user %s </h2><br><a href="../signup/">  create another account?</a>' %user.username)
+        return HttpResponse('<h2>Created new user %s </h2><br><a href="../sign_up/">  create another account?</a>' %user.username)
     except :
-        return render( request, 'auth_model/create_new_user.html', {'error':'Error making account. Try again'} )
+        return render( request, 'auth_model/sign_up.html', {'error':'Error making account. Try again'} )
+        # Returning to signup page in case of error in making the account

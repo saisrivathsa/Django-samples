@@ -1,13 +1,14 @@
 from django.conf.urls import url
 from . import views
+from django.views.generic import TemplateView
 
 app_name = 'auth_model'
 
 urlpatterns = [
-    url(r'^login/$', views.login, name='login'),
-    url(r'^auth_view/$', views.auth_view, name='auth_view'),
-    url(r'^success/$', views.success, name='success'),
+    url(r'^login/$', TemplateView.as_view(template_name='auth_model/login.html'), name='login'), #displays a login page
+    url(r'^authenticate/$', views.authenticate_method, name='authenticate_method'),# this method checks for the user with given credentials
+    url(r'^success/$', views.success, name='success'), # success message after login and logout link
     url(r'^logout/$', views.logout, name='logout'),
-    url(r'^create_new_user/$', views.create_new_user, name='create_new_user'),
-    url(r'^sign_up/$', views.sign_up, name='sign_up'),
+    url(r'^create_new_user/$', views.create_new_user, name='create_new_user'), #method to create a new user using the given credentials
+    url(r'^sign_up/$', TemplateView.as_view(template_name='auth_model/sign_up.html'), name='sign_up'), # sign up page
 ]
